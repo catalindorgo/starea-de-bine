@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Starea de bine la locul de muncă</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta name="description" content="Starea de bine la locul de muncă - activități, strategii și recomandări pentru bunăstarea angajaților." />
+  <style>
+    :root{
+      --surface:#ffffff;
+      --text:#18212f;
+      --muted:#5b6472;
+      --line:#e6e3dc;
+      --accent:#111111;
+      --accent-soft:#ece9df;
+      --shadow:0 12px 30px rgba(0,0,0,.08);
+      --shadow-lg:0 20px 50px rgba(0,0,0,.12);
+      --radius:24px;
+      --max:1200px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(217,207,181,.22), transparent 28%),
+        linear-gradient(180deg, #fbfaf7 0%, #f4f1ea 100%);
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit}
+    .wrap{width:min(var(--max), calc(100% - 32px)); margin:0 auto}
+    .topbar{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter:saturate(180%) blur(14px);
+      background:rgba(251,250,247,.84);
+      border-bottom:1px solid rgba(0,0,0,.05);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:78px}
+    .brand{display:flex; align-items:center; gap:14px; text-decoration:none}
+    .brand img{
+      width:58px; height:58px; object-fit:contain; border-radius:50%;
+      background:white; padding:4px; box-shadow:var(--shadow)
+    }
+    .brand span{font-weight:800; letter-spacing:.01em}
+    .navlinks{display:flex; flex-wrap:wrap; gap:10px}
+    .navlinks a{
+      text-decoration:none; padding:10px 14px; border-radius:999px;
+      color:var(--muted); font-weight:600; transition:.2s ease;
+    }
+    .navlinks a:hover{background:var(--accent-soft); color:var(--text); transform:translateY(-1px)}
+
+    .hero{padding:72px 0 48px}
+    .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center}
+    .hero-copy h1{
+      margin:0 0 18px; font-size:clamp(2.6rem, 5vw, 5rem);
+      line-height:.96; letter-spacing:-.04em;
+    }
+    .hero-copy p{
+      font-size:1.08rem; line-height:1.85; color:var(--muted);
+      max-width:60ch; margin:0 0 28px
+    }
+    .hero-actions{display:flex; gap:14px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      border:none; text-decoration:none; border-radius:999px;
+      padding:14px 20px; font-weight:700; box-shadow:var(--shadow); transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--accent); color:#fff}
+    .btn-secondary{background:#fff; color:var(--text); border:1px solid var(--line)}
+    .hero-card{
+      position:relative;
+      border-radius:32px;
+      overflow:hidden;
+      min-height:500px;
+      box-shadow:var(--shadow-lg);
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .hero-card img{width:100%; height:100%; object-fit:cover; object-position:center center; display:block}
+    .hero-card::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.28));
+      pointer-events:none;
+    }
+
+    .section{padding:34px 0}
+    .section-head{display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:20px}
+    .eyebrow{
+      display:inline-block; padding:8px 12px; border-radius:999px;
+      background:var(--accent-soft); color:#4c4435; font-size:.86rem; font-weight:800;
+      letter-spacing:.08em; text-transform:uppercase; margin-bottom:12px;
+    }
+    h2{margin:0; font-size:clamp(1.8rem, 3vw, 3rem); letter-spacing:-.03em}
+    .section-intro{margin:12px 0 0; color:var(--muted); line-height:1.7; max-width:70ch}
+
+    .cards{display:grid; grid-template-columns:repeat(2,1fr); gap:22px}
+    .card,.wellness-box,.stat,.recommend-card,.contact-card{
+      background:#fff; border:1px solid rgba(0,0,0,.06);
+      border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+    .card:hover,.recommend-card:hover,.wellness-box:hover,.stat:hover,.contact-card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow-lg);
+    }
+    .card-media{aspect-ratio:16/9; background:#f2eee4; display:flex; justify-content:center; align-items:center; overflow:hidden; border-radius:24px 24px 0 0}
+    .card-media img{width:100%; height:100%; object-fit:cover; object-position:center center; display:block}
+    .card-body,.recommend-copy,.wellness-box,.stat,.contact-card{padding:22px}
+    .card h3,.recommend-copy h3{margin:0 0 10px; font-size:1.2rem}
+    .card p,.card li,.wellness-box li,.recommend-copy li,.stat p{color:var(--muted); line-height:1.7}
+    .card ul,.wellness-box ul,.recommend-copy ul{margin:0 0 0 18px; padding:0}
+
+    .wellness-grid,.recommend-layout,.contact{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+    .impact{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:22px}
+    .stat strong{display:block; font-size:2rem; margin-bottom:10px}
+
+    .contact-row{display:flex; align-items:flex-start; gap:14px; margin-top:16px}
+    .icon{
+      width:44px; height:44px; border-radius:14px; display:grid; place-items:center;
+      background:var(--accent-soft); flex:0 0 auto; font-size:1.1rem;
+    }
+    .contact-row strong{display:block; margin-bottom:4px}
+    .contact-row a{text-decoration:none}
+    .contact-row a:hover{text-decoration:underline}
+    .contact-images{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    .contact-images img{width:100%; height:auto; object-fit:contain; object-position:center center; border-radius:20px; border:1px solid rgba(0,0,0,.06); background:#ffffff; padding:10px; box-shadow:var(--shadow); margin:auto}
+
+    footer{
+      padding:40px 0 60px; color:var(--muted); font-size:.95rem;
+    }
+    .footer-box{
+      border-top:1px solid var(--line); padding-top:20px;
+      display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    }
+
+    .reveal{opacity:0; transform:translateY(22px); animation:revealUp .75s ease forwards}
+    .delay-1{animation-delay:.08s}
+    .delay-2{animation-delay:.16s}
+    .delay-3{animation-delay:.24s}
+    @keyframes revealUp{
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,.wellness-grid,.impact,.recommend-layout,.contact {grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr}
+      .hero-card{min-height:340px}
+    }
+    @media (max-width: 720px){
+      .nav{padding:10px 0}
+      .navlinks{gap:6px}
+      .navlinks a{padding:8px 10px; font-size:.95rem}
+      .hero{padding-top:42px}
+      .brand span{font-size:.95rem}
+      .contact-images{grid-template-columns:1fr}
+      .impact{grid-template-columns:1fr}
+    }
+  
+.hamburger{
+display:none;
+font-size:26px;
+background:none;
+border:none;
+cursor:pointer;
+}
+@media (max-width:720px){
+.navlinks{
+display:none;
+flex-direction:column;
+position:absolute;
+top:70px;
+left:0;
+right:0;
+background:white;
+padding:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+.navlinks.show{display:flex;}
+.hamburger{display:block;}
+}
+
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#acasa">
+        <img src="images/logo.png" alt="Logo Starea de bine la locul de muncă">
+        <span>Starea de bine la locul de muncă</span>
+      </a>
+      
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+<div class="navlinks" id="mobileMenu">
+
+        <a href="#acasa">Home</a>
+        <a href="#wellness">Wellness</a>
+        <a href="#activitati">Activități</a>
+        <a href="#strategii">Strategii și recomandări</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="hero" id="acasa">
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Program</div>
+          <h1>Starea de bine la locul de muncă</h1>
+          <p>
+            Un program dedicat bunăstării la locul de muncă, care păstrează accentul pe sănătatea fizică,
+            mentală și socială a angajaților. Intervențiile propuse urmăresc reducerea stresului,
+            consolidarea relațiilor sănătoase și crearea unui climat de lucru mai echilibrat.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Contactează-ne</a>
+            <a class="btn btn-secondary" href="#activitati">Vezi activitățile</a>
+          </div>
+        </div>
+        <div class="hero-card reveal delay-1">
+          <img src="images/hero.jpg" alt="Activitate de yoga și echilibru">
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="wellness">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Wellness - oferit de angajator</div>
+            <h2>Definiția conceptului, consecințe și importanță</h2>
+            <p class="section-intro">
+              Starea de bine este un concept multidimensional ce cuprinde o multitudine de factori interconectați.
+              Este recunoscută ca o stare de bine fizică, mentală și socială, dincolo de simpla absență a afecțiunilor
+              mentale sau fizice. În general, wellness la locul de muncă se referă la un mediu de lucru care să favorizeze
+              sănătatea și bunăstarea tuturor angajaților.
+            </p>
+          </div>
+        </div>
+
+        <div class="wellness-grid">
+          <div class="wellness-box reveal delay-1">
+            <h3>Consecințele neglijării</h3>
+            <ul>
+              <li>Este un cerc vicios atunci când sănătatea fizică și mentală a angajaților nu este apreciată la locul de muncă.</li>
+              <li>Angajații suprasolicitați și subevaluați sunt mai predispuși să se îmbolnăvească.</li>
+              <li>Este mai probabil să își ia concediu chiar dacă nu sunt bolnavi din punct de vedere fizic.</li>
+            </ul>
+          </div>
+
+          <div class="wellness-box reveal delay-2">
+            <h3>Importanța</h3>
+            <ul>
+              <li>Perioada petrecută la muncă reprezintă aproximativ o treime din viața de veghe a unui angajat.</li>
+              <li>Accentul pus pe sănătatea mentală și bunăstarea holistică este noua normă la locul de muncă.</li>
+              <li>Acest lucru este susținut și de noile generații care intră pe piața forței de muncă.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="impact">
+          <div class="stat reveal delay-1">
+            <strong>12.8 mil</strong>
+            <p>ore de muncă pierdute din cauza tensiunii la locul de muncă.</p>
+          </div>
+          <div class="stat reveal delay-2">
+            <strong>€20 mld</strong>
+            <p>pierduți anual din productivitate la nivelul UE.</p>
+          </div>
+          <div class="stat reveal delay-3">
+            <strong>$150 mld</strong>
+            <p>pierduți la nivel de productivitate a companiei în SUA.</p>
+          </div>
+        </div>
+
+        <div class="impact">
+          <div class="stat reveal delay-1">
+            <strong>50%</strong>
+            <p>din angajații europeni se declarau supuși unor factori de stres la locul de muncă în 2023.</p>
+          </div>
+          <div class="stat reveal delay-2">
+            <strong>20%</strong>
+            <p>suferă de extenuare.</p>
+          </div>
+          <div class="stat reveal delay-3">
+            <strong>25%</strong>
+            <p>din angajați identifică locul de muncă drept principal factor de stres.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="activitati">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Activitățile noastre</div>
+            <h2>Exemple de activități propuse</h2>
+            <p class="section-intro">
+              Programul poate include activități individuale și de grup, orientate spre reducerea stresului,
+              creșterea energiei și consolidarea coeziunii între colegi.
+            </p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <article class="card reveal delay-1">
+            <div class="card-media"><img src="images/activity1.jpg" alt="Activități de wellbeing în grup"></div>
+            <div class="card-body">
+              <h3>Bootcamp-uri, teambuilding-uri și evaluare</h3>
+              <ul>
+                <li>Bootcamp-uri și teambuilding-uri.</li>
+                <li>Distribuire chestionare individuale pentru identificarea problemelor și evaluarea lor.</li>
+                <li>Interpretare rezultate cu psiholog acreditat.</li>
+                <li>Întâlniri cu antrenor certificat - online / la sediu.</li>
+                <li>Activități asistate cu animale (lucrul cu un specialist în dresajul canin).</li>
+                <li>Activități artistice muzicale cu scop de accelerare a coeziunii sociale între angajați și a integrării valorilor organizaționale.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card reveal delay-2">
+            <div class="card-media"><img src="images/activity2.jpg" alt="Exerciții și activități în aer liber"></div>
+            <div class="card-body">
+              <h3>Mișcare, recuperare și experiențe ghidate</h3>
+              <ul>
+                <li>Colaborare cu terapeut specializat în kinetoterapie și masaj de relaxare.</li>
+                <li>Tehnici de respirație pentru oxigenare, alcalinizare și reducerea stresului.</li>
+                <li>Clase de stretching și mobilitate.</li>
+                <li>Running Club - începători / avansați.</li>
+                <li>Hiking în natură.</li>
+                <li>Ghid pentru practica expunerii controlate la frig.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="strategii">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Strategii și recomandări</div>
+            <h2>Direcții pentru promovarea stării de bine</h2>
+            <p class="section-intro">
+              Pentru a crea un climat propice ce generează o stare de bine în rândul angajaților pot fi utilizate
+              atât tehnici individuale, cât și strategii organizaționale.
+            </p>
+          </div>
+        </div>
+
+        <div class="recommend-layout">
+          <article class="recommend-card reveal delay-1">
+            <div class="card-media"><img src="images/recommend1.jpg" alt="Strategii individuale și organizaționale"></div>
+            <div class="recommend-copy">
+              <h3>Tehnici și strategii de bază</h3>
+              <ul>
+                <li>Tehnici individuale care vizează maximizarea potențialului individual de control al efectelor factorilor perturbatori.</li>
+                <li>Strategii organizaționale care urmăresc eliminarea cauzelor care generează tensiuni la locul de muncă.</li>
+                <li>Însușirea de cunoștințe despre natura și cauzele tensiunilor de la locul de muncă.</li>
+                <li>Dobândirea de cunoștințe despre organizarea timpului.</li>
+                <li>Învățarea de exerciții de relaxare.</li>
+                <li>Consiliere individuală în funcție de problemele legate de locul de muncă și de cele familiale.</li>
+                <li>Gestionarea timpului.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="recommend-card reveal delay-2">
+            <div class="card-media"><img src="images/recommend2.jpg" alt="Recomandări pentru wellbeing la birou"></div>
+            <div class="recommend-copy">
+              <h3>Recomandările noastre</h3>
+              <ul>
+                <li>Training-uri legate de gestionarea task-urilor și a timpului.</li>
+                <li>Crearea unor proceduri de lucru personalizate pentru fiecare angajat.</li>
+                <li>Crearea unor programe de lucru flexibile.</li>
+                <li>Oferirea de resurse suficiente.</li>
+                <li>Implementarea unui spațiu de lucru ergonomic.</li>
+                <li>Înțelegere legată de problemele personale.</li>
+                <li>Promovarea gândirii pozitive pentru evitarea conflictelor.</li>
+                <li>Măsuri pentru combaterea situațiilor de hărțuire.</li>
+                <li>Gestionarea pozitivă și transparentă a situațiilor complexe.</li>
+                <li>Comunicare corectă, completă și eficientă, legată de orice aspect al organizației.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Contact</div>
+            <h2>Hai să vorbim</h2>
+            <p class="section-intro">
+              Dacă vrei să afli mai multe despre program sau să discutăm o formă de colaborare, ne poți contacta direct.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact">
+          <div class="contact-card reveal delay-1">
+            <div class="contact-row">
+              <div class="icon">👤</div>
+              <div>
+                <strong>Titus Pal</strong>
+                <span>Coordonator proiect</span>
+              </div>
+            </div>
+
+            <div class="contact-row">
+              <div class="icon">✉️</div>
+              <div>
+                <strong>Email</strong>
+                <a href="mailto:tituspal.ii@gmail.com">tituspal.ii@gmail.com</a>
+              </div>
+            </div>
+
+            <div class="contact-row">
+              <div class="icon">📞</div>
+              <div>
+                <strong>Telefon</strong>
+                <a href="tel:0754888320">0754 888 320</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-images reveal delay-2">
+            <img src="images/titus.png" alt="Titus Pal">
+            <img src="images/cosmin.png" alt="Cosmin Popuța">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-box">
+      <div>© Starea de bine la locul de muncă</div>
+      <div></div>
+    </div>
+  </footer>
+
+<script>
+function toggleMenu(){
+  const m = document.getElementById("mobileMenu");
+  m.classList.toggle("show");
+}
+</script>
+
+</body>
+</html>
